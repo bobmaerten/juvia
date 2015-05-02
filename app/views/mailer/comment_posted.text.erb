@@ -1,11 +1,11 @@
-# A new comment has been posted on "<%= @site.name %>"
+# <%= "#{t('mail.body.a_new_comment')} #{@site.name}" %>
 
 <% if @comment.moderation_status != :ok %>
-Please moderate this comment at <%= admin_comments_url %>
+<%= "#{t('mail.body.a_new_comment')} #{admin_comments_url}" %>
 
 <% end %>
-Topic     : <%= @comment.topic.title %> (<%= admin_topic_url(@comment.topic) %>)
-Name      : <%= @comment.author_name || 'Anonymous' %>
+<%= t('mail.body.topic') %>     : <%= @comment.topic.title %> (<%= admin_topic_url(@comment.topic) %>)
+<%= t('mail.body.name') %>      : <%= @comment.author_name || 'Anonymous' %>
 Email     : <%= @comment.author_email || 'None given' %>
 IP        : <%= @comment.author_ip %>
 User agent: <%= @comment.author_user_agent || 'Unknown' %>

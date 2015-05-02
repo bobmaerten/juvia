@@ -3,3 +3,11 @@
 
 en:
   hello: "Hello world"
+  mail:
+    title:
+      new_comment_posted: "New comment posted"
+    body:
+      a_new_comment: "A new comment has been posted on"
+      topic: "Topic"
+      name: "Name"
+      please_moderate: "Please moderate this comment at"

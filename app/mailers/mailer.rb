@@ -7,6 +7,16 @@ class Mailer < ActionMailer::Base
   def comment_posted(comment)
     @site    = comment.site
     @comment = comment
-    mail(:to => comment.site.user.email, :subject => "New comment posted")
+    mail(to: comment.site.user.email, subject: I18n.t('mail.title.new_comment_posted'))
+  end
+
+  def reply_posted(comment)
+    @site    = comment.site
+    @comment = comment
+    posters = comment.topic.comments.map(&:author_email).uniq
+    posters.delete(comment.author_email)
+    posters.delete(comment.site.user.email)
+    emails = posters.join(",")
+    mail(bcc: emails, subject: "[#{@site.name}] #{I18n.t('mail.title.new_comment_posted')}")
   end
 end

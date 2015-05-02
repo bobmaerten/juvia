@@ -9,20 +9,22 @@ class Comment < ActiveRecord::Base
   attr_accessible :author_name, :author_email, :author_ip, :author_user_agent, :referer, :content
 
   belongs_to :topic, :inverse_of => :comments
-  
+
   acts_as_enum :moderation_status, [:ok, :unchecked, :spam]
-  
+
   scope :visible, -> { where(:moderation_status => moderation_status(:ok)) }
   scope :requiring_moderation, -> { where("moderation_status != #{moderation_status(:ok)}") }
-  
+
   validates_presence_of :content
   validates_presence_of :author_ip
-  
+
   before_validation :nullify_blank_fields
   before_create :set_moderation_status
   after_create :update_topic_timestamp
   after_create :notify_moderators
-  
+  after_create :notify_posters
+  after_save   :notify_posters, if: :moderation_status_changed?
+
   def site
     topic.site
   end
@@ -39,7 +41,7 @@ class Comment < ActiveRecord::Base
       nil
     end
   end
-  
+
   def spam?
     response = call_akismet('comment-check', akismet_params)
     if response.body == 'invalid'
@@ -57,11 +59,11 @@ class Comment < ActiveRecord::Base
       raise AkismetError, "Akismet server error: #{response.body}"
     end
   end
-  
+
   def report_ham
     call_akismet('submit-ham', akismet_params)
   end
-  
+
   def report_spam
     call_akismet('submit-spam', akismet_params)
   end
@@ -71,14 +73,14 @@ private
     'User-Agent' => "Juvia | Rails/#{Rails.version}",
     'Content-Type' => 'application/x-www-form-urlencoded'
   }
-  
+
   def nullify_blank_fields
     self.author_name  = nil if author_name.blank?
     self.author_email = nil if author_email.blank?
     self.author_user_agent = nil if author_user_agent.blank?
     self.referer = nil if referer.blank?
   end
-  
+
   def akismet_params
     raise AkismetError, "Site URL required for Akismet check" if topic.site.url.blank?
     params = {
@@ -93,7 +95,7 @@ private
     params[:comment_author_email] = author_email if author_email.present?
     params
   end
-  
+
   def call_akismet(function_name, params)
     raise AkismetError, "Akismet key required" if topic.site.akismet_key.blank?
     uri = URI.parse("http://#{topic.site.akismet_key}.rest.akismet.com/1.1/#{function_name}")
@@ -107,7 +109,7 @@ private
       response
     end
   end
-  
+
   def set_moderation_status
     case topic.site.moderation_method
     when :akismet
@@ -127,5 +129,9 @@ private
 
   def notify_moderators
     Mailer.comment_posted(self).deliver_now
+  end
+
+  def notify_posters
+    Mailer.reply_posted(self).deliver_now
   end
 end

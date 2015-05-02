@@ -1,0 +1,10 @@
+fr:
+  hello: "Bonjour à tous"
+  mail:
+    title:
+      new_comment_posted: "Un nouveau commentaire a été posté"
+    body:
+      a_new_comment: "Un nouveau commentaire a été posté sur"
+      topic: "Billet"
+      name: "Nom"
+      please_moderate: "Veuillez modérer ce commentaire sur"
