@@ -23,6 +23,9 @@ gem 'uglifier'
 # compatibility gems
 gem 'protected_attributes'
 
+# Shrink logs as we write thme to sdtout
+gem 'lograge'
+
 # Deploy with Capistrano
 # gem 'capistrano'
 
@@ -34,6 +37,7 @@ group :development do
   gem 'guard-livereload'
   gem 'web-console'
   gem 'spring'
+  gem 'quiet_assets'
 
   # Gems used for comment import from WordPress
   # gem 'htmlentities'

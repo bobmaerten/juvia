@@ -122,6 +122,10 @@ GEM
     listen (3.0.3)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    lograge (0.3.4)
+      actionpack (>= 3)
+      activesupport (>= 3)
+      railties (>= 3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
@@ -150,6 +154,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -316,11 +322,13 @@ DEPENDENCIES
   guard-livereload
   jquery-rails
   launchy
+  lograge
   mysql2
   nokogiri
   pg
   protected_attributes
   pry
+  quiet_assets
   rack
   rails (= 4.2.4)
   rspec
