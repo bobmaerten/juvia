@@ -1,4 +1,4 @@
-# <%= "#{t('mail.body.a_new_comment')} @site.name" %>
+# <%= "#{t('mail.body.a_new_comment') @site.name}" %>
 
 <%= t('mail.body.topic') %>     : <%= @comment.topic.title %> (<%= @comment.topic.url.split('#').first %>)
 <%= t('mail.body.name') %>     : <%= @comment.author_name || 'Anonymous' %>
