@@ -23,9 +23,6 @@ gem 'uglifier'
 # compatibility gems
 gem 'protected_attributes'
 
-# Shrink logs as we write thme to sdtout
-gem 'lograge'
-
 # Deploy with Capistrano
 # gem 'capistrano'
 
@@ -75,4 +72,8 @@ end
 group :sqlite do
   # adapter: sqlite3
   gem 'sqlite3', :require => false
+end
+
+group :production do
+  gem 'rails_12factor'
 end
