@@ -53,4 +53,15 @@ Juvia::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name:      ENV['SMTP_USERNAME'],
+    password:       ENV['SMTP_PASSWORD'],
+    address:        ENV['SMTP_ADDRESS'],
+    domain:         ENV['SMTP_DOMAIN'],
+    port:           ENV['SMTP_PORT'],
+    authentication: ENV['SMTP_AUTH'],
+    enable_starttls_auto: true
+  }
 end
