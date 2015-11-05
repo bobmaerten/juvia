@@ -17,6 +17,6 @@ class Mailer < ActionMailer::Base
     posters.delete(comment.author_email)
     posters.delete(comment.site.user.email)
     emails = posters.join(",")
-    mail(bcc: emails, subject: "[#{@site.name}] #{I18n.t('mail.title.new_comment_posted')}")
+    mail(to: comment.author_email, bcc: emails, subject: "[#{@site.name}] #{I18n.t('mail.title.new_comment_posted')}")
   end
 end
