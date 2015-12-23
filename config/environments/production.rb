@@ -32,6 +32,10 @@ Juvia::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
 
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  config.log_formatter = ::Logger::Formatter.new
+  config.lograge.enabled = true
+
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
