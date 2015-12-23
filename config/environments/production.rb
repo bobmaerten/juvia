@@ -35,7 +35,10 @@ Juvia::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
   config.lograge.enabled = true
-
+  # add time to lograge
+  config.lograge.custom_options = lambda do |event|
+    {:time => event.time}
+  end
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
