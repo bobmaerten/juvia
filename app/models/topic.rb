@@ -1,5 +1,5 @@
 class Topic < ActiveRecord::Base
-  attr_accessible :key, :title, :url
+  attr_accessible :key, :title, :url, :site
 
   belongs_to :site, :inverse_of => :topics
   has_many :comments, -> { order("created_at DESC") }, :inverse_of => :topic
